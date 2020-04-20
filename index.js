@@ -1,5 +1,5 @@
 //set up server object
-const server = require('./api/server');
+const server = require('./api/server.js');
 
 //set up listener
 const PORT = process.env.PORT || 4000;

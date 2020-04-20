@@ -5,9 +5,9 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
 //utilize the user helper methods
-const Users = require('./users-model');
+const Users = require('../users/users-model.js');
 
-//set up endpoint
+//set up endpoint for registration
 router.post('/register', (req, res) => {
     //we can use let here instead of const to allow for updating
     //user credentials later
@@ -26,7 +26,7 @@ router.post('/register', (req, res) => {
 
     
     //add the user to the database
-    Users.add(creds)
+    Users.add(user)
         .then(saved => {
             res.status(201).json({message: 'User saved.', saved})
         })
@@ -34,5 +34,28 @@ router.post('/register', (req, res) => {
             res.status(500).json({errorMessage: 'Could not save user to database.', err})
         })
 })
+
+//set up the login endpoint for registered users
+router.post('/login', (req, res) => {
+    let {username, password} = req.body
+
+    // search for the user by the username
+    Users.findBy({ username })
+        //begin search for the user
+        .then(user => {
+            console.log('user:', user);
+            // if the user is found check to see if the passwords match
+            if(user && bcrypt.compareSync(password, user[0].password)){
+                //if they are the same
+                res.status(200).json({message: 'You have successfully logged in.'})
+            } else {
+                res.status(401).json({message: 'Incorrect password.'})
+            }
+        })
+        .catch(err =>{
+            res.status(500).json({errorMessage: 'Could not save user to database.', err})
+        })
+})
+
 
 module.exports = router;
