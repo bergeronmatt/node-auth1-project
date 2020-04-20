@@ -22,7 +22,7 @@ server.use('/api/auth', authRouter);
 
 //sanity test
 server.get('/', (req, res) => {
-    res.json({api: 'Green ligth is go.'});
+    res.json({api: 'Green light is go.'});
 });
 
 module.exports = server;
