@@ -42,16 +42,21 @@ router.post('/login', (req, res) => {
     // search for the user by the username
     Users.findBy({ username })
         //begin search for the user
-        .then(user => {
-            console.log('user:', user);
+        // .then(user => { this is used for the initial .then() way
+        .then(([user]) => { //used to parse through the array of user objects without the user[] identifier
+            // console.log('user:', user); debuggin 500 error
             // if the user is found check to see if the passwords match
+            // if(user && bcrypt.compareSync(password, user[0].password)){ initial way to search for user
             if(user && bcrypt.compareSync(password, user[0].password)){
+                //async check
                 //if they are the same
                 res.status(200).json({message: 'You have successfully logged in.'})
             } else {
+                //if they are not
                 res.status(401).json({message: 'Incorrect password.'})
             }
         })
+        //if there is an error before the comparison can begin
         .catch(err =>{
             res.status(500).json({errorMessage: 'Could not save user to database.', err})
         })
