@@ -47,9 +47,9 @@ router.post('/login', (req, res) => {
             // console.log('user:', user); debuggin 500 error
             // if the user is found check to see if the passwords match
             // if(user && bcrypt.compareSync(password, user[0].password)){ initial way to search for user
-            if(user && bcrypt.compareSync(password, user[0].password)){
-                //async check
+            if(user && bcrypt.compareSync(password, user.password)){
                 //if they are the same
+                req.session.loggedIn = true;
                 res.status(200).json({message: 'You have successfully logged in.'})
             } else {
                 //if they are not
@@ -58,7 +58,7 @@ router.post('/login', (req, res) => {
         })
         //if there is an error before the comparison can begin
         .catch(err =>{
-            res.status(500).json({errorMessage: 'Could not save user to database.', err})
+            res.status(500).json({errorMessage: 'Could not login.', err})
         })
 })
 
