@@ -4,8 +4,9 @@ const router = require("express").Router();
 //import the helper functions
 const Users = require("./users-model.js");
 
-//save the users to the database
-//update code here
+
+
+//render the list of the users
 router.get("/", (req, res) => {
   Users.find()
     .then(users => {
