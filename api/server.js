@@ -17,6 +17,7 @@ const sessionConfig = {
     name: "monster",
     secret: process.env.SESSION_SECRET || 'super strong secret',
     resave: false,
+    saveUninitialized: true,
     cookie: {
         maxAge: 1000 * 60 * 10,
         secure: process.env.USE_SECURE_COOKIES || false,

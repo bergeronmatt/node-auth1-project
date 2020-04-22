@@ -1,12 +1,11 @@
 //gatekeeper function
 module.exports = (req, res, next) => {
 
-    console.log('session', req.session)
-  
-    if(req.session.loggedIn){
+
+    if(req.session && req.session.user){
         next();
     } else{
-        res.status(401).json({message: 'Incorrect password'});
+        res.status(401).json({message: 'Incorrect password part 2'});
     }
 
 };

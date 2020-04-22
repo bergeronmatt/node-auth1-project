@@ -4,7 +4,9 @@ const router = require("express").Router();
 //import the helper functions
 const Users = require("./users-model.js");
 
+const authenticator = require('../auth/authenticator.js')
 
+router.use(authenticator)
 
 //render the list of the users
 router.get("/", (req, res) => {
